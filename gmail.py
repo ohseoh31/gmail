@@ -28,8 +28,8 @@ short_url_list = {
 
 login_info= {
     'ORG_EMAIL' : '@gmail.com',
-    'FROM_EMAIL' : 'ohseoh44@gmail.com',
-    'FROM_PWD' : 'soek1212!@',
+    'FROM_EMAIL' : '[YOUR_EMAIL_ID]@gmail.com',
+    'FROM_PWD' : '[YOUR_PASSWRD]',
     'SMTP_SERVER' : "imap.gmail.com",
     'SMTP_PORT' : 993
 }
