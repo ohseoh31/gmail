@@ -1,7 +1,8 @@
 #-*- coding: utf-8 -*-
 
 import exifread
-import folium
+#import folium
+import gmplot
 import os
 
 '''
@@ -9,32 +10,16 @@ save gpsMap refer
 http://qkqhxla1.tistory.com/497
 https://python-visualization.github.io/folium/quickstart.html
 '''
-class GpsParser :
+class GpsParser:
     def __init__(self, gpsList):
         self.gpsList = []
+        self.latitude_list = []
+        self.longitude_list = []
         self.fileNameList = []
         self.count =-1
     def setGPSList(self,gpsList,fileNameList):
         self.gpsList = gpsList
         self.fileNameList = fileNameList
-    def setMap(self):
-        #현재 우리나라 위치
-        m = folium.Map(location=[37.49, 127.018],zoom_start=10)
-        for file in self.fileNameList :
-            print ('file :',file)
-        for gps in self.gpsList:
-            self.count = self.count +1
-            if len(gps) !=0:
-                folium.Marker(
-                    location=gps,
-                    popup= self.fileNameList[self.count],
-                    icon=folium.Icon(icon='cloud')
-                ).add_to(m)
-
-        m.save('maps.html')
-
-    def getMap(self):
-        os.system('start maps.html')
 
     def _convert_to_degress(self, value):
         d = float(value.values[0].num) / float(value.values[0].den)
@@ -71,3 +56,30 @@ class GpsParser :
             #return [lat_value, lon_value]
         return []
 
+    def setMap(self):
+        gmap3 = gmplot.GoogleMapPlotter(37.49,
+                                        127.018, 13)
+        count = -1
+        for gps in self.gpsList:
+            count = count + 1
+            print (gps)
+            if gps == []:
+                continue
+            else :
+                fileName=str(self.fileNameList[count])
+                gmap3.marker(gps[0], gps[1], 'red', title= fileName.split('\\image\\')[1].encode('utf-8'))
+                self.latitude_list.append(gps[0])
+                self.longitude_list.append(gps[1])
+
+
+        gmap3.scatter(self.latitude_list, self.longitude_list, 'red',
+                      size=60, marker=False)
+
+        # Plot method Draw a line in
+        # between given coordinates
+        gmap3.plot(self.latitude_list, self.longitude_list,
+                   'cornflowerblue', edge_width=2.5)
+        gmap3.draw("maps.html")
+
+    def getMap(self):
+        os.system('start maps.html')
