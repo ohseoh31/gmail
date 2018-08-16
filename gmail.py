@@ -78,8 +78,8 @@ class Gmail :
 
                     print (email_now)
 
-                    #if email_from == 'Kyle Choi <fl0ckfl0ck@hotmail.com>' and '2018-08-11' == email_now:
-                    if email_from == 'Kyle Choi <fl0ckfl0ck@hotmail.com>' and check_time == email_now:
+                    #if email_from == '[YOUR_CHECK_EMAIL]' and '2018-08-11' == email_now:
+                    if email_from == '[YOUR_CHECK_EMAIL]' and check_time == email_now:
                         print('From : ' + email_from + '\n')
                         for part in msg.walk():
                             if part.get_content_type() == "text/html":
